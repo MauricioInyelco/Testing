@@ -41,7 +41,7 @@
 </td>
 <td>
 <div class="infoBox" id="duration">
-<div class="counter">0.005s</div>
+<div class="counter">0.046s</div>
 <p>duration</p>
 </div>
 </td>
@@ -73,26 +73,33 @@
 <a name="buscarPerroEnGoogle"></a>
 <h3 class="failures">buscarPerroEnGoogle</h3>
 <span class="code">
-<pre>org.openqa.selenium.InvalidSelectorException: Compound class names not permitted
-For documentation on this error, please visit: https://selenium.dev/exceptions/#invalid_selector_exception
+<pre>org.openqa.selenium.ElementNotInteractableException: element not interactable
+  (Session info: chrome=104.0.5112.102)
 Build info: version: '4.3.0', revision: 'a4995e2c09*'
 System info: host: 'ZERO', ip: '192.168.100.7', os.name: 'Windows 11', os.arch: 'amd64', os.version: '10.0', java.version: '18.0.1.1'
-Driver info: driver.version: unknown
-	at app//org.openqa.selenium.By$ByClassName.&lt;init&gt;(By.java:310)
-	at app//org.openqa.selenium.By.className(By.java:100)
-	at app//org.openqa.selenium.support.AbstractFindByBuilder.buildByFromShortFindBy(AbstractFindByBuilder.java:43)
-	at app//org.openqa.selenium.support.FindBy$FindByBuilder.buildIt(FindBy.java:85)
-	at app//org.openqa.selenium.support.pagefactory.Annotations.buildBy(Annotations.java:79)
-	at app//org.openqa.selenium.support.pagefactory.DefaultElementLocator.&lt;init&gt;(DefaultElementLocator.java:58)
-	at app//org.openqa.selenium.support.pagefactory.DefaultElementLocator.&lt;init&gt;(DefaultElementLocator.java:46)
-	at app//org.openqa.selenium.support.pagefactory.DefaultElementLocatorFactory.createLocator(DefaultElementLocatorFactory.java:33)
-	at app//org.openqa.selenium.support.pagefactory.DefaultFieldDecorator.decorate(DefaultFieldDecorator.java:57)
-	at app//org.openqa.selenium.support.PageFactory.proxyFields(PageFactory.java:111)
-	at app//org.openqa.selenium.support.PageFactory.initElements(PageFactory.java:103)
-	at app//org.openqa.selenium.support.PageFactory.initElements(PageFactory.java:90)
-	at app//org.openqa.selenium.support.PageFactory.initElements(PageFactory.java:78)
-	at app//page.Google.&lt;init&gt;(Google.java:19)
-	at app//testClass.BusquedaAnimalesGoogle.busquedaPerro(BusquedaAnimalesGoogle.java:11)
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Command: [5c5954d1b6a473d8df8f22f771a87bff, clickElement {id=2758f7bd-6aba-4b03-bb51-a948761697a3}]
+Capabilities {acceptInsecureCerts: false, browserName: chrome, browserVersion: 104.0.5112.102, chrome: {chromedriverVersion: 103.0.5060.134 (8ec6fce403b..., userDataDir: C:\Users\minye\AppData\Loca...}, goog:chromeOptions: {debuggerAddress: localhost:50259}, networkConnectionEnabled: false, pageLoadStrategy: normal, platformName: WINDOWS, proxy: Proxy(), se:cdp: ws://localhost:50259/devtoo..., se:cdpVersion: 104.0.5112.102, setWindowRect: true, strictFileInteractability: false, timeouts: {implicit: 0, pageLoad: 300000, script: 30000}, unhandledPromptBehavior: dismiss and notify, webauthn:extension:credBlob: true, webauthn:extension:largeBlob: true, webauthn:virtualAuthenticators: true}
+Element: [[ChromeDriver: chrome on WINDOWS (5c5954d1b6a473d8df8f22f771a87bff)] -&gt; xpath: //input[contains(@value,'Buscar con Google')]]
+Session ID: 5c5954d1b6a473d8df8f22f771a87bff
+	at java.base@18.0.1.1/jdk.internal.reflect.DirectConstructorHandleAccessor.newInstance(DirectConstructorHandleAccessor.java:67)
+	at java.base@18.0.1.1/java.lang.reflect.Constructor.newInstanceWithCaller(Constructor.java:499)
+	at java.base@18.0.1.1/java.lang.reflect.Constructor.newInstance(Constructor.java:483)
+	at app//org.openqa.selenium.remote.codec.w3c.W3CHttpResponseCodec.createException(W3CHttpResponseCodec.java:200)
+	at app//org.openqa.selenium.remote.codec.w3c.W3CHttpResponseCodec.decode(W3CHttpResponseCodec.java:133)
+	at app//org.openqa.selenium.remote.codec.w3c.W3CHttpResponseCodec.decode(W3CHttpResponseCodec.java:53)
+	at app//org.openqa.selenium.remote.HttpCommandExecutor.execute(HttpCommandExecutor.java:184)
+	at app//org.openqa.selenium.remote.service.DriverCommandExecutor.invokeExecute(DriverCommandExecutor.java:167)
+	at app//org.openqa.selenium.remote.service.DriverCommandExecutor.execute(DriverCommandExecutor.java:142)
+	at app//org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:569)
+	at app//org.openqa.selenium.remote.RemoteWebElement.execute(RemoteWebElement.java:257)
+	at app//org.openqa.selenium.remote.RemoteWebElement.click(RemoteWebElement.java:78)
+	at java.base@18.0.1.1/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104)
+	at java.base@18.0.1.1/java.lang.reflect.Method.invoke(Method.java:577)
+	at app//org.openqa.selenium.support.pagefactory.internal.LocatingElementHandler.invoke(LocatingElementHandler.java:52)
+	at app/jdk.proxy2/jdk.proxy2.$Proxy18.click(Unknown Source)
+	at app//page.Google.clickBtnBuscar(Google.java:35)
+	at app//testClass.BusquedaAnimalesGoogle.busquedaPerro(BusquedaAnimalesGoogle.java:13)
 	at app//testSuite.Prueba.buscarPerroEnGoogle(Prueba.java:29)
 	at java.base@18.0.1.1/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104)
 	at java.base@18.0.1.1/java.lang.reflect.Method.invoke(Method.java:577)
@@ -152,7 +159,7 @@ Driver info: driver.version: unknown
 </thead>
 <tr>
 <td class="failures">buscarPerroEnGoogle</td>
-<td class="failures">0.005s</td>
+<td class="failures">0.046s</td>
 <td class="failures">failed</td>
 </tr>
 </table>
@@ -165,7 +172,7 @@ Driver info: driver.version: unknown
 <input id="line-wrapping-toggle" type="checkbox" autocomplete="off"/>
 </label>
 </div>Generated by 
-<a href="http://www.gradle.org">Gradle 7.4</a> at 26 ago 2022 17:44:54</p>
+<a href="http://www.gradle.org">Gradle 7.4</a> at 29 ago 2022 12:20:51</p>
 </div>
 </div>
 </body>
