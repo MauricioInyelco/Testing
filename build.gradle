@@ -10,9 +10,12 @@ repositories {
 }
 
 dependencies {
-    implementation group: 'org.seleniumhq.selenium', name: 'selenium-java', version: '4.3.0'
-    testImplementation group: 'org.testng', name: 'testng', version: '7.6.1'
-    testImplementation group: 'org.slf4j', name: 'slf4j-simple', version: '1.7.36'
+
+    implementation group: 'org.seleniumhq.selenium', name: 'selenium-java', version: '3.141.59'
+    testImplementation group: 'org.testng', name: 'testng', version: '7.4.0'
+    implementation group: 'com.itextpdf', name: 'itextpdf', version: '5.5.13.3'
+    implementation group: 'net.coobird', name: 'thumbnailator', version: '0.4.17'
+
 }
 
 test {
