@@ -31,7 +31,7 @@ public class Prueba {
     @AfterTest
 
     public void closeDriver(){
-        //DriverContext.closeDriver();
+        DriverContext.closeDriver();
         PdfQaNovaReports.closePDF();
     }
 
