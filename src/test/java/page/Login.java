@@ -6,27 +6,34 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import utils.DriverContext;
+import utils.Reporte.EstadoPrueba;
+import utils.Reporte.PdfQaNovaReports;
+import utils.Validaciones;
 
 
 public class Login {
 
-    @FindBy(xpath = "//input[@id = 'imUname']")
-    WebElement inputUsuario;
+    @FindBy(xpath = "//*[@id=\"imLogin\"]/form/div[1]/label/span")
+    private WebElement labelUsuario;
 
-   @FindBy(xpath = "//input[@id = 'imPwd']")
-   WebElement inputClave;
+    @FindBy(xpath = "//input[@id = 'imUname']")
+    private WebElement inputUsuario;
+
+    @FindBy(xpath = "//input[@id = 'imPwd']")
+    private WebElement inputClave;
 
     @FindBy(xpath = "//input[contains(@value,'Ingresar a Demo')]")
-    WebElement btnIngresar;
-    WebDriverWait webDriverWait;
+    private WebElement btnIngresar;
 
-    public Login (WebDriver webDriver){
-        PageFactory.initElements(webDriver, this);
-        this.webDriverWait = new WebDriverWait(webDriver, 30);
+
+    public Login (){
+        PageFactory.initElements(DriverContext.getDriver(), this);
+
     }
     public void ingresarUsuario(String usuario){
-        webDriverWait.until(ExpectedConditions.visibilityOf(inputUsuario));
-        //PdfQaNovaReports.addWebReportImage("Despliegue Login", "Login desplegado correctamente", EstadoPrueba.PASSED, true);
+        Validaciones.validarObjeto(inputUsuario, "input usuario");
+        PdfQaNovaReports.addWebReportImage("Despliegue Login", "Login desplegado correctamente", EstadoPrueba.PASSED, true);
         inputUsuario.sendKeys(usuario);
     }
 
@@ -36,7 +43,11 @@ public class Login {
     }
 
     public void clickBtnIngresar()  {
-        //PdfQaNovaReports.addWebReportImage("Datos Login", "Se ingresa usuario y contraseña", EstadoPrueba.PASSED, false);
+        PdfQaNovaReports.addWebReportImage("Datos Login", "Se ingresa usuario y contraseña", EstadoPrueba.PASSED, false);
         btnIngresar.click();
+    }
+
+    public void validarTextoUsuario(String texto){
+        Validaciones.validarTexto(labelUsuario, texto);
     }
 }

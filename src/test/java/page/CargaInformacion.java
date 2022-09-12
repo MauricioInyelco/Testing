@@ -7,6 +7,10 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import utils.DriverContext;
+import utils.Reporte.EstadoPrueba;
+import utils.Reporte.PdfQaNovaReports;
+import utils.Validaciones;
 
 
 import java.text.ParseException;
@@ -70,15 +74,15 @@ public class CargaInformacion {
     private WebElement btnReset;
 
 
-    WebDriverWait webDriverWait;
 
-    public CargaInformacion(WebDriver webDriver) {
-        PageFactory.initElements(webDriver, this);
-        this.webDriverWait = new WebDriverWait(webDriver, 30);
+    public CargaInformacion() {
+        PageFactory.initElements(DriverContext.getDriver(), this);
+
     }
 
     public String recuperarTitulo(){
-        webDriverWait.until(ExpectedConditions.visibilityOf(titulo));
+        Validaciones.validarObjeto(titulo, "titulo");
+        PdfQaNovaReports.addWebReportImage("Despliegue carga de informacion", "Carga de informacion desplegado correctamente", EstadoPrueba.PASSED, false);
         String texto = titulo.getText();
         return texto;
     }
@@ -103,23 +107,6 @@ public class CargaInformacion {
         Select select = new Select(campoLista);
         select.selectByVisibleText(valor);
     }
-   // Seleccion multiple que solo deja elegir una opcion
-    public void seleccionMultipleUnaOpcion(int indicador){
-        switch (indicador){
-            case 1:
-                chckbxSeleccionMultiple1.click();
-                break;
-            case 2:
-                chckbxSeleccionMultiple2.click();
-                break;
-            case 3:
-                chckbxSeleccionMultiple3.click();
-                break;
-            default:
-                System.out.println("Valor no procesable");
-        }
-    }
-
     public void seleccionMultiple(String indicador){
         String[] indicadores = indicador.split(",");
         for (String nro: indicadores){
@@ -156,30 +143,32 @@ public class CargaInformacion {
         }
     }
 
-//    public void seleccionarFechaCalendario(String fecha)  {
-//        iconoCalendario.click();
-//        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-//        String hoy = simpleDateFormat.format(new Date());
-//        Date hoyDate = simpleDateFormat.parse(hoy);
-//        Date fechaDate = simpleDateFormat.parse(fecha);
-//        long diferencia = ChronoUnit.MONTHS.between(LocalDate.parse(hoy).withDayOfMonth(1), LocalDate.parse(fecha).withDayOfMonth(1));
-//        int dia = Integer.parseInt(fecha.substring(fecha.length()-2));
-//        int meses;
-//        if (hoyDate.after(fechaDate)) {
-//            meses = (int) (diferencia * -1);
-//            for (int x = 0; x <= meses - 1; x++) {
-//                btnRetrocederMes.click();
-//            }
-//        } else {
-//            meses = (int) diferencia;
-//            for (int x = 0; x <= meses - 1 ; x++) {
-//                btnAvanzarMes.click();
-//            }
-//        }
-//        DriverContext.getDriver().findElement(By.xpath("//div[@id = 'imDPcal']//td[text() = '" + dia + "']")).click();
-//    }
+    public void seleccionarFechaCalendario(String fecha) throws ParseException  {
+        iconoCalendario.click();
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        String hoy = simpleDateFormat.format(new Date());
+        Date hoyDate = simpleDateFormat.parse(hoy);
+        Date fechaDate = simpleDateFormat.parse(fecha);
+        long diferencia = ChronoUnit.MONTHS.between(LocalDate.parse(hoy).withMonth(1), LocalDate.parse(fecha).withDayOfMonth(1));
+        int dia = Integer.parseInt(fecha.substring(fecha.length()-2));
+        int meses;
+        if (hoyDate.after(fechaDate)) {
+            meses = (int) (diferencia * -1);
+            for (int x = 0; x <= meses - 1; x++) {
+                btnRetrocederMes.click();
+            }
+        } else {
+            meses = (int) diferencia;
+            for (int x = 0; x <= meses - 1 ; x++) {
+                btnAvanzarMes.click();
+            }
+        }
+        PdfQaNovaReports.addWebReportImage("Seleccion fecha calendario", "Se selecciona fecha: "+ fecha +" desde calendario", EstadoPrueba.PASSED, false);
+        DriverContext.getDriver().findElement(By.xpath("//div[@id = 'imDPcal']//td[text() = '" + dia + "']")).click();
+    }
 
     public void clickBtnEnviar(){
+        PdfQaNovaReports.addWebReportImage("Datos formulario", "Se ingresan datos al formulario", EstadoPrueba.PASSED, false);
         btnEnviar.click();
     }
 
