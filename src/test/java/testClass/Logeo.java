@@ -39,5 +39,7 @@ public class Logeo {
         matrizInformacion.validarDespliegue();
         matrizInformacion.validarTextoTitulo("Matriz de Información");
         matrizInformacion.recuperarDatosFiltrados();
+        matrizInformacion.escribirFiltro("prueba");
+        matrizInformacion.recuperarDatosFiltrados();
     }
 }
