@@ -33,7 +33,7 @@ public class Login {
     }
     public void ingresarUsuario(String usuario){
         Validaciones.validarObjeto(inputUsuario, "input usuario");
-        PdfQaNovaReports.addWebReportImage("Despliegue Login", "Login desplegado correctamente", EstadoPrueba.PASSED, true);
+        PdfQaNovaReports.addWebReportImage("Despliegue Login", "Login desplegado correctamente", EstadoPrueba.PASSED, false);
         inputUsuario.sendKeys(usuario);
     }
 

@@ -37,9 +37,9 @@ public class Logeo {
         cargaInformacion.seleccionRadioButton(2);
         cargaInformacion.clickBtnEnviar();
         matrizInformacion.validarDespliegue();
-        matrizInformacion.validarTextoTitulo("Matriz de Información");
-        matrizInformacion.recuperarDatosFiltrados();
+        matrizInformacion.validarTextoTitulo("Matriz de información");
         matrizInformacion.escribirFiltro("prueba");
+        matrizInformacion.clickBtnFiltrar();
         matrizInformacion.recuperarDatosFiltrados();
     }
 }

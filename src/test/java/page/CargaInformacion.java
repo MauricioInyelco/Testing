@@ -25,13 +25,13 @@ public class CargaInformacion {
     @FindBy(id = "imPgTitle")
     private WebElement titulo;
 
-    @FindBy(xpath = "//input[@id='imObjectForm_1_2']")
+    @FindBy(xpath = "//*[@id=\"imObjectForm_1_2\"]")
     private WebElement campoTexto;
 
-    @FindBy(xpath = "//input[@id='imObjectForm_1_3']")
+    @FindBy(xpath = "//*[@id=\"imObjectForm_1_3\"]")
     private WebElement campoCorreo;
 
-    @FindBy(xpath = "//input[@id='imObjectForm_1_4']")
+    @FindBy(xpath = "//*[@id=\"imObjectForm_1_4\"]")
     private WebElement campoTextArea;
 
     @FindBy(xpath = "//input[@id='imObjectForm_1_5']")
