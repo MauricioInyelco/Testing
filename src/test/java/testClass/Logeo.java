@@ -1,9 +1,8 @@
 package testClass;
 import org.openqa.selenium.WebDriver;
-import page.DescargarArchivos;
-import page.Login;
-import page.CargaInformacion;
-import page.MatrizInformacion;
+import page.*;
+import utils.Reporte.EstadoPrueba;
+import utils.Reporte.PdfQaNovaReports;
 
 import java.io.IOException;
 import java.text.ParseException;
@@ -15,6 +14,7 @@ public class Logeo {
     private CargaInformacion cargaInformacion;
     private DescargarArchivos descargarArchivos;
     private MatrizInformacion matrizInformacion;
+    private CargarArchivos cargarArchivos;
 
 
 //Se agrega constructor
@@ -26,6 +26,7 @@ public class Logeo {
         cargaInformacion = new CargaInformacion();
         matrizInformacion = new MatrizInformacion();
         descargarArchivos = new DescargarArchivos();
+        cargarArchivos = new CargarArchivos();
         login.validarTextoUsuario("Nombre del usuario:");
         login.ingresarUsuario(usuario);
         login.ingresarClave(clave);
@@ -40,13 +41,23 @@ public class Logeo {
         //cargaInformacion.seleccionMultiple("2,3");
         //cargaInformacion.seleccionRadioButton(2);
         //cargaInformacion.clickBtnEnviar();
-        descargarArchivos.validarDespliegue();
-        descargarArchivos.ingresarDescargarArchivos();
-        descargarArchivos.descargarPorImagen();
         //matrizInformacion.validarDespliegue();
         //matrizInformacion.validarTextoTitulo("Matriz de información");
         //matrizInformacion.escribirFiltro("prueba");
         //matrizInformacion.clickBtnFiltrar();
         //matrizInformacion.recuperarDatosFiltrados();
+        //descargarArchivos.validarDespliegue();
+        //descargarArchivos.ingresarDescargarArchivos();
+        //descargarArchivos.descargarPorImagen();
+          cargarArchivos.validarDespliegue();
+          cargarArchivos.ingresarCargarArchivos();
+          cargarArchivos.validarTextoTitulo();
+          cargarArchivos.cargarArchivo();
+          matrizInformacion.validarDespliegue();
+          cargarArchivos.clickBtnEnviar();
+          PdfQaNovaReports.addWebReportImage("Archivo de carga", "Archivo cargado exitosamente", EstadoPrueba.PASSED, false);
+
+
+
     }
 }
