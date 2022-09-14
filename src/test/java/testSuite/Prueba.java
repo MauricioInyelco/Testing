@@ -32,11 +32,11 @@ public class Prueba {
 
     public void closeDriver(){
         DriverContext.closeDriver();
-        //PdfQaNovaReports.closePDF();
+        PdfQaNovaReports.closePDF();
     }
 
     @Test
-    public void pruebaLogin()throws ParseException{
+    public void pruebaLogin()throws ParseException, IOException{
         Logeo logeo = new Logeo();
         String usuario = ReadProperties.readFromConfig("Propiedades.properties").getProperty("usuario");
         String clave = ReadProperties.readFromConfig("Propiedades.properties").getProperty("clave");

@@ -19,8 +19,9 @@ import java.nio.file.StandardCopyOption;
 
 public class DescargarArchivos {
 
-    @FindBy(xpath = "//span[@class='imMnMnTextLabel' and text()='Descarga de Archivos']")
-    private WebElement btnDescargarArchivos;
+    @FindBy(xpath = "//*[@id=\"imMnMnNode5\"]")
+    private WebElement btnDescargaArchivos;
+
 
     @FindBy(id = "imPgTitle")
     private WebElement titulo;
@@ -28,8 +29,8 @@ public class DescargarArchivos {
     @FindBy(xpath = "//*[@id=\"imTextObject_5_05_tab0\"]//a")
     private WebElement linkDescarga;
 
-    @FindBy(id = "pluginAppObj_5_06")
-    private WebElement btnDescarga;
+    @FindBy(xpath = "//*[@id=\"pluginAppObj_5_06\"]")
+    private WebElement btnDescargar;
 
     @FindBy(xpath = "//*[@id=\"imCellStyle_4\"]//a")
     private WebElement imagenDescarga;
@@ -47,18 +48,27 @@ public class DescargarArchivos {
     }
 
     public void ingresarDescargarArchivos() {
-        btnDescargarArchivos.click();
+        btnDescargaArchivos.click();
     }
+
 
     public void descargarPorBoton() throws IOException {
         String ruta = ReadProperties.readFromConfig("Propiedades.properties").getProperty("directorioDescargas");
-        String url = btnDescarga.findElement(By.tagName("a")).getAttribute("href");
+        String url = btnDescargar.findElement(By.tagName("a")).getAttribute("href");
         String nombreArchivo = url.substring(url.lastIndexOf("/"));
         HttpURLConnection httpURLConnection = (HttpURLConnection) (new URL(url).openConnection());
         httpURLConnection.setRequestMethod("GET");
         InputStream inputStream = httpURLConnection.getInputStream();
         Files.copy(inputStream, new File(ruta + "\\" + nombreArchivo).toPath(), StandardCopyOption.REPLACE_EXISTING);
         System.out.println("Descarga Realizada");
+    }
+
+    public void descargarPorLink() throws IOException {
+        Utils.descargarArchivo(linkDescarga);
+    }
+
+    public void descargarPorImagen() throws IOException {
+        Utils.descargarArchivo(imagenDescarga);
     }
 
 }
