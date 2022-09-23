@@ -10,6 +10,7 @@ import utils.Constants.Navegador;
 import utils.DriverContext;
 import utils.ReadProperties;
 import utils.Reporte.PdfQaNovaReports;
+import utils.Utils;
 
 
 import java.io.IOException;
@@ -20,7 +21,8 @@ public class Prueba {
     //esta es la direccion del caso de buscar animales:
    // String urlGoogle = "https://www.google.cl/";
     //esta es la de qanova
-    String url = "http://www.qanovagroup.com/piloto/";
+
+    String url = ReadProperties.readFromConfig("Propiedades.properties").getProperty("url");
 
     @BeforeTest
     public void setup(){
@@ -42,7 +44,13 @@ public class Prueba {
         String clave = ReadProperties.readFromConfig("Propiedades.properties").getProperty("clave");
         logeo.CasoLogin1(usuario, clave);
         PdfQaNovaReports.closePDF();
-
-
+        //Utils.enviarCorreo("pruebaqanova@gmail.com");
     }
+
+//    @Test
+//    public void pruebaJson() throws  IOException{
+//        Logeo logeo = new Logeo();
+//        logeo.json();
+//        PdfQaNovaReports.closePDF();
+//    }
 }

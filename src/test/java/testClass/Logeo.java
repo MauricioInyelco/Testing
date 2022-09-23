@@ -49,15 +49,18 @@ public class Logeo {
         //descargarArchivos.validarDespliegue();
         //descargarArchivos.ingresarDescargarArchivos();
         //descargarArchivos.descargarPorImagen();
-          cargarArchivos.validarDespliegue();
-          cargarArchivos.ingresarCargarArchivos();
-          cargarArchivos.validarTextoTitulo();
-          cargarArchivos.cargarArchivo();
-          matrizInformacion.validarDespliegue();
-          cargarArchivos.clickBtnEnviar();
-          PdfQaNovaReports.addWebReportImage("Archivo de carga", "Archivo cargado exitosamente", EstadoPrueba.PASSED, false);
+        //cargarArchivos.validarDespliegue();
+        //cargarArchivos.ingresarCargarArchivos();
+        //cargarArchivos.validarTextoTitulo();
+        //cargarArchivos.cargarArchivo();
+        //matrizInformacion.validarDespliegue();
+        //cargarArchivos.clickBtnEnviar();
+        //PdfQaNovaReports.addWebReportImage("Archivo de carga", "Archivo cargado exitosamente", EstadoPrueba.PASSED, false);
 
+    }
 
-
+    public void json() throws IOException {
+        LeeJson leerJson = new LeeJson();
+        leerJson.generarReporte();
     }
 }
