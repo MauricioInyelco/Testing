@@ -74,4 +74,31 @@ public class MatrizInformacion {
         }
         return datosFila;
     }
+/** Recupera datos filtrados de la base de datos*/
+    public List<String> recuperarDatosFiltradosBd() {
+        WebElement cuerpo;
+        WebElement fila;
+        List<String> datosFila = new ArrayList<String>();
+        String datosColumna = "";
+        Validaciones.validarObjeto(tabla.findElement(By.tagName("tbody")), "Vista Tabla");
+        int registros = Integer.parseInt(spanCantidad.getText().substring(spanCantidad.getText().lastIndexOf("of") + 3).trim());
+        for(int c = 0; c <= registros/10; c++){
+            cuerpo = tabla.findElement(By.tagName("tbody"));
+            for (int x = 0; x < cuerpo.findElements(By.tagName("tr")).size(); x++) {
+                fila = cuerpo.findElements(By.tagName("tr")).get(x);
+                for (int y = 0; y < fila.findElements(By.tagName("td")).size(); y++) {
+                    datosColumna += fila.findElements(By.tagName("td")).get(y).getText().trim() + ";";
+                }
+                datosColumna = datosColumna.substring(0, datosColumna.length() - 3);
+                System.out.println("Se recupera la fila nro "+(x+1)+", con los siguientes datos: \n"+datosColumna);
+                datosFila.add(datosColumna);
+                datosColumna = "";
+            }
+            if(c < (registros/10)){
+                btnPaginaSiguiente.click();
+                Validaciones.validarObjeto(tabla.findElement(By.tagName("tbody")), "Vista tabla numero" +(c+2));
+            }
+        }
+        return datosFila;
+    }
 }

@@ -28,6 +28,11 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Properties;
 
@@ -83,16 +88,16 @@ public class Utils {
         String ruta = ReadProperties.readFromConfig("Propiedades.properties").getProperty("directorioDescargas");
         String url = elementoDescarga.getAttribute("href");
         String nombreArchivo = url.substring(url.lastIndexOf("/") + 1);
-        File file = new File(ruta + "\\" +nombreArchivo);
-        if(file.exists()){
-            System.out.println("Archivo '" +nombreArchivo+ "' existe, se procede a borrarlo");
-            try{
+        File file = new File(ruta + "\\" + nombreArchivo);
+        if (file.exists()) {
+            System.out.println("Archivo '" + nombreArchivo + "' existe, se procede a borrarlo");
+            try {
                 file.delete();
-                System.out.println("Archivo '" +nombreArchivo+ "' borrado");
-                PdfQaNovaReports.addReport("Borrado "+nombreArchivo, "El archivo '"+nombreArchivo+"' existe en la ruta '"+ruta+"' por lo cual se procede a borrarlo.", EstadoPrueba.PASSED, false);
-            }catch(Exception e){
-                System.out.println("Archivo '"+nombreArchivo+"' no pudo ser borrado");
-                PdfQaNovaReports.addReport("Borrado "+nombreArchivo, "El archivo '"+nombreArchivo+"' existe en la ruta '"+ruta+"', pero no puede ser borrado", EstadoPrueba.FAILED, true);
+                System.out.println("Archivo '" + nombreArchivo + "' borrado");
+                PdfQaNovaReports.addReport("Borrado " + nombreArchivo, "El archivo '" + nombreArchivo + "' existe en la ruta '" + ruta + "' por lo cual se procede a borrarlo.", EstadoPrueba.PASSED, false);
+            } catch (Exception e) {
+                System.out.println("Archivo '" + nombreArchivo + "' no pudo ser borrado");
+                PdfQaNovaReports.addReport("Borrado " + nombreArchivo, "El archivo '" + nombreArchivo + "' existe en la ruta '" + ruta + "', pero no puede ser borrado", EstadoPrueba.FAILED, true);
             }
         }
         HttpURLConnection httpURLConnection = (HttpURLConnection) (new URL(url).openConnection());
@@ -100,13 +105,13 @@ public class Utils {
         try (InputStream inputStream = httpURLConnection.getInputStream()) {
             Files.copy(inputStream, new File(ruta + "\\" + nombreArchivo).toPath(), StandardCopyOption.REPLACE_EXISTING);
             System.out.println("Descarga Realizada");
-            PdfQaNovaReports.addReport("Descarga Archivo "+nombreArchivo, "Se realiza correctamente la descarga del archivo '"+ nombreArchivo +"', el cual se ubica en la ruta: \n"+ ruta, EstadoPrueba.PASSED, false);
-        } catch (Exception e){
-            PdfQaNovaReports.addReport("Descarga Archivo "+nombreArchivo, "NO se realiza la descarga del archivo '"+ nombreArchivo +"'", EstadoPrueba.FAILED, true);
+            PdfQaNovaReports.addReport("Descarga Archivo " + nombreArchivo, "Se realiza correctamente la descarga del archivo '" + nombreArchivo + "', el cual se ubica en la ruta: \n" + ruta, EstadoPrueba.PASSED, false);
+        } catch (Exception e) {
+            PdfQaNovaReports.addReport("Descarga Archivo " + nombreArchivo, "NO se realiza la descarga del archivo '" + nombreArchivo + "'", EstadoPrueba.FAILED, true);
         }
     }
 
-    public static void enviarCorreo(String destinatario){
+    public static void enviarCorreo(String destinatario) {
         Properties properties = System.getProperties();
         properties.put("mail.smtp.host", "smtp.gmail.com");
         properties.put("mail.smtp.user", ReadProperties.readFromConfig("Propiedades.properties").get("usuarioCorreo"));
@@ -118,8 +123,8 @@ public class Utils {
         MimeMessage message = new MimeMessage(session);
         BodyPart texto = new MimeBodyPart();
         BodyPart adjunto = new MimeBodyPart();
-        try{
-            texto.setText("La prueba "+ PdfQaNovaReports.getTestName() + "ha quedado en estado "+PdfQaNovaReports.getFinalStatusTest());
+        try {
+            texto.setText("La prueba " + PdfQaNovaReports.getTestName() + "ha quedado en estado " + PdfQaNovaReports.getFinalStatusTest());
             adjunto.setDataHandler(new DataHandler(new FileDataSource("tmp/" + PdfQaNovaReports.getFullTestName())));
             adjunto.setFileName(PdfQaNovaReports.getFullTestName());
             message.setFrom(new InternetAddress((String) ReadProperties.readFromConfig("Propiedades.properties").get("usuarioCorreo")));
@@ -133,10 +138,68 @@ public class Utils {
             transport.connect("smtp.gmail.com", ReadProperties.readFromConfig("Propiedades.properties").get("usuarioCorreo").toString(), ReadProperties.readFromConfig("Propiedades.properties").get("claveCorreo").toString());
             transport.sendMessage(message, message.getAllRecipients());
             transport.close();
-        }catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
+    }
 
+//    public static Connection getConnection() {
+//        String ipBd = ReadProperties.readFromConfig("Propiedades.properties").get("ipBaseDeDatos").toString();
+//        String bd = ReadProperties.readFromConfig("Propiedades.properties").get("baseDeDatos").toString();
+//        String url = "jdbc:mysql://" + ipBd + ":3306/" + bd;
+//        String usuario = ReadProperties.readFromConfig("Propiedades.properties").get("usuarioBaseDeDatos").toString();
+//        String clave = ReadProperties.readFromConfig("Propiedades.properties").get("claveBaseDeDatos").toString();
+//        Connection con = null;
+//        try {
+//            Class.forName("com.mysql.cj.jdbc.Driver");
+//            con = DriverManager.getConnection(url, usuario, clave);
+//            System.out.println("Conexion a base de datos " + bd + " exitosa");
+//            PdfQaNovaReports.addReport("Conexion a base de datos", "La conexion a la base de datos '" + bd + "', ha sido exitosa", EstadoPrueba.PASSED, false);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            System.out.println("Conexion a base de datos " + bd + " fallida");
+//            PdfQaNovaReports.addReport("Conexion a base de datos", "La conexion a la base de datos '" + bd + "', no se pudo realizar", EstadoPrueba.FAILED, true);
+//        }
+//        return con;
+//    }
+
+        public static ArrayList<String> consultaBaseDeDatos(String ip, String baseDeDatos, String usuario, String clave, String consulta) {
+        String url = "jdbc:mysql://" + ip + ":3306/" + baseDeDatos;
+        Connection con = null;
+        ArrayList<String> registros = new ArrayList();
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            con = DriverManager.getConnection(url, usuario, clave);
+            System.out.println("Conexion a base de datos " + baseDeDatos + " exitosa");
+            PdfQaNovaReports.addReport("Conexion a base de datos", "La conexion a la base de datos '" + baseDeDatos + "', ha sido exitosa", EstadoPrueba.PASSED, false);
+            try{
+                Statement statement = con.createStatement();
+                ResultSet rs = statement.executeQuery(consulta);
+                System.out.println("Consulta realizada a la base de datos " +baseDeDatos+ ", query: " +consulta);
+                String resultado = "";
+                while(rs.next()){
+                    for(int x = 1; x <= rs.getMetaData().getColumnCount(); x++){
+                        resultado += rs.getString(x).trim() + ";";
+                    }
+                    resultado = resultado.substring(0, resultado.length()-1);
+                    registros.add(resultado);
+                    resultado = "";
+                }
+                con.close();
+                PdfQaNovaReports.addReport("Consulta a base de datos", "La query '" +consulta+ "' se ha ejecutado correctamente, recuperando los siguientes datos:\n" + registros.toString(), EstadoPrueba.PASSED, false);
+            }catch (Exception e){
+                e.printStackTrace();
+                con.close();
+                PdfQaNovaReports.addReport("Consulta a base de datos", "La query '" +consulta+ "' no se ha podido ejecutar", EstadoPrueba.FAILED, true);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Conexion a base de datos " + baseDeDatos + " fallida");
+            PdfQaNovaReports.addReport("Conexion a base de datos", "La conexion a la base de datos '" + baseDeDatos + "', no se pudo realizar", EstadoPrueba.FAILED, true);
+        }
+        return registros;
     }
 
 }
+
+
